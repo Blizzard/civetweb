@@ -553,8 +553,10 @@ endif()
 add_subdirectory(src)
 
 # Enable the testing of the library/executable
-include(CTest)
+
 if (CIVETWEB_BUILD_TESTING)
+  include(CTest)
+
   # Check unit testing framework Version
   set(CIVETWEB_CHECK_VERSION 0.11.0 CACHE STRING
     "The version of Check unit testing framework to build and include statically")
