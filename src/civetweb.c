@@ -99,6 +99,8 @@
 #pragma warning(disable : 4306)
 /* conditional expression is constant: introduced by FD_SET(..) */
 #pragma warning(disable : 4127)
+/* expression before comma has no effect; expected expression with side-effect: introduced by FD_SET in VC2017 */
+#pragma warning(disable : 4548)
 /* non-constant aggregate initializer: issued due to missing C99 support */
 #pragma warning(disable : 4204)
 /* padding added after data member */
@@ -9513,6 +9515,13 @@ connect_socket(struct mg_context *ctx /* may be NULL */,
 		*sock = INVALID_SOCKET;
 		return 0;
 	}
+
+	int nodelay_on = 1;
+	setsockopt(*sock,
+		IPPROTO_TCP,
+		TCP_NODELAY,
+		(SOCK_OPT_TYPE)&nodelay_on,
+		sizeof(nodelay_on));
 
 	set_close_on_exec(*sock, NULL, ctx);
 
